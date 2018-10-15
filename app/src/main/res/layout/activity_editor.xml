@@ -75,8 +75,7 @@
                 android:id="@+id/edit_book_supplier_contact"
                 style="@style/EditorFieldStyle"
                 android:hint="@string/hint_book_supplier_contact"
-                android:inputType="phone"
-                tools:text="555-555-5555" />
+                android:inputType="phone" />
 
             <ImageButton
                 android:id="@+id/phoneButton"

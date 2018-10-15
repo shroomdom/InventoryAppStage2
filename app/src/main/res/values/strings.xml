@@ -86,4 +86,8 @@
     <string name="increase_button">increase button</string>
     <string name="decrease_button">decrease button</string>
 
+    <string name="update_amount_failed">Update amount failed</string>
+
+    <string name="update_amount_successful">Update amount successful</string>
+
 </resources>
