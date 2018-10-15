@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <!-- Layout for a single list item in the list of books -->
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/book_details"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
     android:padding="@dimen/general_margin">
 
     <TextView
@@ -17,17 +17,35 @@
         android:textColor="#2B3D4D"  />
 
     <TextView
+        android:id="@+id/book_price_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/book_name"
+        android:text="@string/main_pg_price" />
+
+    <TextView
         android:id="@+id/book_price"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/book_name"
+        android:layout_toRightOf="@+id/book_price_label"
         android:fontFamily="sans-serif"
         android:textAppearance="?android:textAppearanceSmall"
         android:textColor="#AEB6BD"  />
 
     <TextView
+        android:id="@+id/book_quantity_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/book_price_label"
+        android:text="@string/main_pg_quantity" />
+
+    <TextView
         android:id="@+id/book_quantity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/book_price_label"
+        android:layout_toRightOf="@+id/book_quantity_label"
         android:fontFamily="sans-serif"
         android:textAppearance="?android:textAppearanceSmall"
         android:textColor="#AEB6BD"  />
@@ -36,9 +54,10 @@
         android:id="@+id/sale_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
         android:gravity="center"
         android:textAppearance="?android:textAppearanceMedium"
         android:focusable="false"
         android:text="@string/sale"
         android:textAllCaps="true"/>
-</LinearLayout>
+</RelativeLayout>

@@ -90,4 +90,18 @@
 
     <string name="update_amount_successful">Update amount successful</string>
 
+    <string name="editor_insert_price_empty">Price field is empty</string>
+
+    <string name="editor_insert_quantity_empty">Quantity field is empty</string>
+
+    <string name="editor_insert_name_empty">Name field is empty</string>
+
+    <string name="editor_insert_supplier_name_empty">Supplier name field is empty</string>
+
+    <string name="editor_insert_supplier_contact_empty">Supplier phone number field is empty</string>
+
+    <string name="main_pg_price">Price:\u0020</string>
+
+    <string name="main_pg_quantity">Quantity:\u0020</string>
+
 </resources>

@@ -123,6 +123,8 @@ import com.example.android.inventoryappstage2.data.BookContract.BookEntry;
             String bookSupplierNameString = mbookSupplierNameEditText.getText().toString().trim();
             String bookSupplierContactString = mbookSupplierContactEditText.getText().toString().trim();
 
+            boolean hasError = false;
+
             // Check if this is supposed to be a new book
             // and check if all the fields in the editor are blank
             if (mCurrentBookUri == null &&
@@ -137,25 +139,56 @@ import com.example.android.inventoryappstage2.data.BookContract.BookEntry;
             // Create a ContentValues object where column names are the keys,
             // and book attributes from the editor are the values.
             ContentValues values = new ContentValues();
-            values.put(BookEntry.COLUMN_PRODUCT_NAME, bookNameString);
             values.put(BookEntry.COLUMN_PRICE, bookPriceString);
             values.put(BookEntry.COLUMN_QUANTITY, bookQuantityString);
-            values.put(BookEntry.COLUMN_SUPPLIER_NAME, bookSupplierNameString);
-            values.put(BookEntry.COLUMN_SUPPLIER_PHONE_NUMBER, bookSupplierContactString);
+
+            if (!TextUtils.isEmpty(bookNameString)) {
+                values.put(BookEntry.COLUMN_PRODUCT_NAME, bookNameString);
+            }else {
+                Toast.makeText(this, getString(R.string.editor_insert_name_empty),
+                        Toast.LENGTH_SHORT).show();
+                return;
+            }
 
             // If the weight is not provided by the user, don't try to parse the string into an
             // integer value. Use 0 by default.
             int bookPrice = 0;
             if (!TextUtils.isEmpty(bookPriceString)) {
+                System.out.println("not empty");
                 bookPrice = Integer.parseInt(bookPriceString);
+                values.put(BookEntry.COLUMN_PRICE, bookPrice);
+            }else {
+                System.out.println("book price is empty");
+                Toast.makeText(this, getString(R.string.editor_insert_price_empty),
+                        Toast.LENGTH_SHORT).show();
+                return;
             }
-            values.put(BookEntry.COLUMN_PRICE, bookPrice);
 
             int bookQuantity = 0;
             if (!TextUtils.isEmpty(bookQuantityString)) {
                 bookQuantity = Integer.parseInt(bookQuantityString);
+                values.put(BookEntry.COLUMN_QUANTITY, bookQuantity);
+            }else {
+                Toast.makeText(this, getString(R.string.editor_insert_quantity_empty),
+                        Toast.LENGTH_SHORT).show();
+                return;
             }
-            values.put(BookEntry.COLUMN_QUANTITY, bookQuantity);
+
+            if (!TextUtils.isEmpty(bookSupplierNameString)) {
+                values.put(BookEntry.COLUMN_SUPPLIER_NAME, bookSupplierNameString);
+            }else {
+                Toast.makeText(this, getString(R.string.editor_insert_supplier_name_empty),
+                        Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            if (!TextUtils.isEmpty(bookSupplierContactString)) {
+                values.put(BookEntry.COLUMN_SUPPLIER_PHONE_NUMBER, bookSupplierContactString);
+            }else {
+                Toast.makeText(this, getString(R.string.editor_insert_supplier_contact_empty),
+                        Toast.LENGTH_SHORT).show();
+                return;
+            }
 
             // Determine if this is a new or existing book by checking if mCurrentBookUri is null or not
             if (mCurrentBookUri == null) {
