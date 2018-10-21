@@ -3,7 +3,6 @@ package com.example.android.inventoryappstage2;
 import android.app.AlertDialog;
 import android.app.LoaderManager;
 import android.content.ContentValues;
-import android.content.Context;
 import android.content.CursorLoader;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -24,7 +23,7 @@ import android.widget.Toast;
 
 import com.example.android.inventoryappstage2.data.BookContract.BookEntry;
 
-/**
+    /**
      * Allows user to create a new book or edit an existing one.
      */
     public class EditorActivity extends AppCompatActivity implements
@@ -45,12 +44,11 @@ import com.example.android.inventoryappstage2.data.BookContract.BookEntry;
         /** EditText field to enter the book quantity */
         private EditText mbookQuantityEditText;
 
-    /** EditText field to enter the book supplier name */
-    private EditText mbookSupplierNameEditText;
+        /** EditText field to enter the book supplier name */
+        private EditText mbookSupplierNameEditText;
 
-    /** EditText field to enter the book supplier contact */
-    private EditText mbookSupplierContactEditText;
-        
+        /** EditText field to enter the book supplier contact */
+        private EditText mbookSupplierContactEditText;
 
         /** Boolean flag that keeps track of whether the book has been edited (true) or not (false) */
         private boolean mBookHasChanged = false;
@@ -92,7 +90,6 @@ import com.example.android.inventoryappstage2.data.BookContract.BookEntry;
                 setTitle(getString(R.string.editor_activity_title_new_book));
 
                 // Invalidate the options menu, so the "Delete" menu option can be hidden.
-                // (It doesn't make sense to delete a book that hasn't been created yet.)
                 invalidateOptionsMenu();
             } else {
                 // Otherwise this is an existing book, so change app bar to say "Edit book"
@@ -122,51 +119,47 @@ import com.example.android.inventoryappstage2.data.BookContract.BookEntry;
             mbookSupplierContactEditText.setOnTouchListener(mTouchListener);
 
             if (mCurrentBookUri == null) {
-mbookIncreaseButton.setVisibility(View.INVISIBLE);
+                mbookIncreaseButton.setVisibility(View.INVISIBLE);
                 mbookDecreaseButton.setVisibility(View.INVISIBLE);
             }else {
                 mbookIncreaseButton.setVisibility(View.VISIBLE);
                 mbookDecreaseButton.setVisibility(View.VISIBLE);
-            ImageButton bookQuantityDecreaseButton = findViewById(R.id.edit_quantity_decrease);
-            bookQuantityDecreaseButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
 
-                    mBookQuantityValue = Integer.valueOf(mbookQuantityEditText.getText().toString());
+                ImageButton bookQuantityDecreaseButton = findViewById(R.id.edit_quantity_decrease);
 
-                    mBookQuantityValue -= 1;
+                bookQuantityDecreaseButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
 
-                    if (mBookQuantityValue < 0) {
-                        //Toast.makeText(this, getString(R.string.quantity_no_inventory_message), Toast.LENGTH_SHORT).show();
-                    }else {
-                        mbookQuantityEditText.setText(String.valueOf(mBookQuantityValue));
-                        //decreaseButtonAmount(mBookIdValue, mBookQuantityValue);
-                        //savebook();
+                        mBookQuantityValue = Integer.valueOf(mbookQuantityEditText.getText().toString());
+
+                        mBookQuantityValue -= 1;
+
+                        if (mBookQuantityValue < 0) {
+                            Toast.makeText(EditorActivity.this, getString(R.string.quantity_no_inventory_message), Toast.LENGTH_SHORT).show();
+                        }else {
+                            mbookQuantityEditText.setText(String.valueOf(mBookQuantityValue));
+                        }
                     }
-                }
-            });
+                });
 
-            ImageButton bookQuantityIncreaseButton = findViewById(R.id.edit_quantity_increase);
-            bookQuantityIncreaseButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
+                ImageButton bookQuantityIncreaseButton = findViewById(R.id.edit_quantity_increase);
 
-                    mBookQuantityValue = Integer.valueOf(mbookQuantityEditText.getText().toString());
+                bookQuantityIncreaseButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
 
-                    mBookQuantityValue += 1;
-                    if (mBookQuantityValue < 0) {
-                        //Toast.makeText(this, getString(R.string.quantity_no_inventory_message), Toast.LENGTH_SHORT).show();
+                        mBookQuantityValue = Integer.valueOf(mbookQuantityEditText.getText().toString());
 
-                    }else {
-                        mbookQuantityEditText.setText(String.valueOf(mBookQuantityValue));
-                        //decreaseButtonAmount(mBookIdValue, mBookQuantityValue);
-                        //savebook();
+                        mBookQuantityValue += 1;
+                        if (mBookQuantityValue < 0) {
+                            Toast.makeText(EditorActivity.this, getString(R.string.quantity_no_inventory_message), Toast.LENGTH_SHORT).show();
+                        }else {
+                            mbookQuantityEditText.setText(String.valueOf(mBookQuantityValue));
+                        }
                     }
-                    //mbookQuantityEditText.setText(String.valueOf(mBookQuantityValue));
-                    //increaseButtonAmount(mBookIdValue, mBookQuantityValue);
-                }
-            });
-        }
+                });
+            }
         }
 
         /**
@@ -208,15 +201,13 @@ mbookIncreaseButton.setVisibility(View.INVISIBLE);
                 return;
             }
 
-            // If the weight is not provided by the user, don't try to parse the string into an
-            // integer value. Use 0 by default.
             int bookPrice = 0;
             if (!TextUtils.isEmpty(bookPriceString)) {
-                System.out.println("not empty");
+                //System.out.println("not empty");
                 bookPrice = Integer.parseInt(bookPriceString);
                 values.put(BookEntry.COLUMN_PRICE, bookPrice);
             }else {
-                System.out.println("book price is empty");
+                //System.out.println("book price is empty");
                 Toast.makeText(this, getString(R.string.editor_insert_price_empty),
                         Toast.LENGTH_SHORT).show();
                 return;
@@ -253,22 +244,22 @@ mbookIncreaseButton.setVisibility(View.INVISIBLE);
                 // This is a NEW book, so insert a new book into the provider,
                 // returning the content URI for the new book.
                 Uri newUri = getContentResolver().insert(BookEntry.CONTENT_URI, values);
-                System.out.println("insert new");
+                //System.out.println("insert new");
 
                 // Show a toast message depending on whether or not the insertion was successful.
                 if (newUri == null) {
-                    System.out.println("insert failed");
+                    //System.out.println("insert failed");
                     // If the new content URI is null, then there was an error with insertion.
                     Toast.makeText(this, getString(R.string.editor_insert_book_failed),
                             Toast.LENGTH_SHORT).show();
                 } else {
-                    System.out.println("insert successful");
+                    //System.out.println("insert successful");
                     // Otherwise, the insertion was successful and we can display a toast.
                     Toast.makeText(this, getString(R.string.editor_insert_book_successful),
                             Toast.LENGTH_SHORT).show();
                 }
             } else {
-                System.out.println("update book");
+                //System.out.println("update book");
                 // Otherwise this is an EXISTING book, so update the book with content URI: mCurrentBookUri
                 // and pass in the new ContentValues. Pass in null for the selection and selection args
                 // because mCurrentBookUri will already identify the correct row in the database that
@@ -277,12 +268,12 @@ mbookIncreaseButton.setVisibility(View.INVISIBLE);
 
                 // Show a toast message depending on whether or not the update was successful.
                 if (rowsAffected == 0) {
-                    System.out.println("update failed");
+                    //System.out.println("update failed");
                     // If no rows were affected, then there was an error with the update.
                     Toast.makeText(this, getString(R.string.editor_update_book_failed),
                             Toast.LENGTH_SHORT).show();
                 } else {
-                    System.out.println("update successful");
+                    //System.out.println("update successful");
                     // Otherwise, the update was successful and we can display a toast.
                     Toast.makeText(this, getString(R.string.editor_update_book_successful),
                             Toast.LENGTH_SHORT).show();
@@ -332,7 +323,7 @@ mbookIncreaseButton.setVisibility(View.INVISIBLE);
                 // Respond to a click on the "Up" arrow button in the app bar
                 case android.R.id.home:
                     // If the book hasn't changed, continue with navigating up to parent activity
-                    // which is the {@link CatalogActivity}.
+                    // which is the {@link MainActivity}.
                     if (!mBookHasChanged) {
                         NavUtils.navigateUpFromSameTask(EditorActivity.this);
                         return true;
@@ -463,61 +454,6 @@ mbookIncreaseButton.setVisibility(View.INVISIBLE);
             mbookSupplierNameEditText.setText("");
             mbookSupplierContactEditText.setText("");
         }
-
-    public void decreaseButtonAmount(int bookID, int bookQuantity) {
-        //bookQuantity -= 1;
-        if (bookQuantity >= 0) {
-
-            //savebook();
-            updateBookAmount(bookQuantity);
-            //Toast.makeText(this, getString(R.string.quantity_change_msg), Toast.LENGTH_SHORT).show();
-        } else {
-            Toast.makeText(this, getString(R.string.quantity_no_inventory_message), Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    public void increaseButtonAmount(int bookID, int bookQuantity) {
-            System.out.println("increase" + bookID + " " + bookQuantity);
-        //bookQuantity = bookQuantity + 1;
-        if (bookQuantity >= 0) {
-
-            System.out.println("start increase");
-            //savebook();
-            updateBookAmount(bookQuantity);
-            //Toast.makeText(this, getString(R.string.quantity_change_msg), Toast.LENGTH_SHORT).show();
-        }
-    }
-
-
-    private void updateBookAmount(int bookQuantity) {
-
-        if (mCurrentBookUri == null) {
-            return;
-        }
-        ContentValues values = new ContentValues();
-        values.put(BookEntry.COLUMN_QUANTITY, bookQuantity);
-
-        /**
-        if (mCurrentBookUri == null) {
-            Uri newUri = getContentResolver().insert(BookEntry.CONTENT_URI, values);
-            if (newUri == null) {
-                Toast.makeText(this, getString(R.string.insert_failed),
-                        Toast.LENGTH_SHORT).show();
-            } else {
-                Toast.makeText(this, getString(R.string.insert_successful),
-                        Toast.LENGTH_SHORT).show();
-            }
-        } else { */
-            int rowsAffected = getContentResolver().update(mCurrentBookUri, values, null, null);
-            if (rowsAffected == 0) {
-                Toast.makeText(this, getString(R.string.update_amount_failed),
-                        Toast.LENGTH_SHORT).show();
-            } else {
-                Toast.makeText(this, getString(R.string.update_amount_successful),
-                        Toast.LENGTH_SHORT).show();
-            }
-        //}
-    }
 
         /**
          * Show a dialog that warns the user there are unsaved changes that will be lost

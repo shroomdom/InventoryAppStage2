@@ -1,17 +1,14 @@
 <resources>
     <string name="app_name">Inventory App Stage 2</string>
 
-        <!-- Label for overflow menu option that inserts fake book data into the app [CHAR LIMIT=20] -->
-        <string name="action_insert_dummy_data">Insert Dummy Data</string>
+    <!-- Label for overflow menu option that deletes all book data in the app [CHAR LIMIT=20] -->
+    <string name="action_delete_all_entries">Delete All Books</string>
 
-        <!-- Label for overflow menu option that deletes all book data in the app [CHAR LIMIT=20] -->
-        <string name="action_delete_all_entries">Delete All Books</string>
+    <!-- Label for editor menu option to save book and leave editor [CHAR LIMIT=20] -->
+    <string name="action_save">Save</string>
 
-        <!-- Label for editor menu option to save book and leave editor [CHAR LIMIT=20] -->
-        <string name="action_save">Save</string>
-
-        <!-- Label for editor overflow menu option that deletes the current book [CHAR LIMIT=20] -->
-        <string name="action_delete">Delete</string>
+    <!-- Label for editor overflow menu option that deletes the current book [CHAR LIMIT=20] -->
+    <string name="action_delete">Delete</string>
 
     <!-- Title for the activity to add a new book [CHAR LIMIT=20] -->
     <string name="editor_activity_title_new_book">Add a Book</string>
@@ -55,10 +52,14 @@
     <!-- Dialog button text for the option to cancel deletion of the current book [CHAR LIMIT=20] -->
     <string name="cancel">Cancel</string>
 
-        <!-- Label for overview category of attributes in the editor [CHAR LIMIT=30] -->
-        <string name="category_overview">Overview</string>
+    <!-- Label for overview category of attributes in the editor [CHAR LIMIT=30] -->
+    <string name="category_overview">Overview</string>
 
-    <!-- Title text for the empty view, which describes the empty dog house image [CHAR LIMIT=50] -->
+    <!-- Title text for the empty view, which is beneath bookshelf image [CHAR LIMIT=50] -->
+    <!-- Image credit to <div>Icons made by <a href="https://www.flaticon.com/authors/freepik"
+    title="Bookshelf">Bookshelf</a> from <a href="https://www.flaticon.com/"
+    title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/"
+    title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div> -->
     <string name="empty_view_title_text">There aren\'t any books here...</string>
 
     <!-- Subtitle text for the empty view that prompts the user to add a book [CHAR LIMIT=50] -->
@@ -73,8 +74,10 @@
     <!-- Text hint for book quantity field in the editor [CHAR LIMIT=30] -->
     <string name="hint_book_quantity">Book Quantity</string>
 
+    <!-- Text hint for book supplier name field in the editor [CHAR LIMIT=30] -->
     <string name="hint_book_supplier_name">Book Supplier Name</string>
 
+    <!-- Text hint for book supplier contact field in the editor [CHAR LIMIT=30] -->
     <string name="hint_book_supplier_contact">Book Supplier Phone Number</string>
 
     <string name="deleted_all_books_message">All Books Deleted</string>
@@ -82,8 +85,11 @@
     <string name="sale">Sale</string>
 
     <string name="quantity_no_inventory_message">This book is no longer available!</string>
+
     <string name="supplier_phone_number">Supplier Phone Number</string>
+
     <string name="increase_button">increase button</string>
+
     <string name="decrease_button">decrease button</string>
 
     <string name="update_amount_failed">Update amount failed</string>
@@ -103,6 +109,15 @@
     <string name="main_pg_price">Price:\u0020</string>
 
     <string name="main_pg_quantity">Quantity:\u0020</string>
+
     <string name="book_supplier_contact">Book Supplier \n Contact</string>
+
+    <string name="book_name">Book Name</string>
+
+    <string name="book_price">Book Price</string>
+
+    <string name="book_quantity">Book Quantity</string>
+
+    <string name="book_supplier">Book Supplier</string>
 
 </resources>

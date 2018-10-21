@@ -6,7 +6,8 @@ import android.provider.BaseColumns;
 
 public final class BookContract {
 
-    private BookContract() {}
+    private BookContract() {
+    }
 
     public static final String CONTENT_AUTHORITY = "com.example.android.inventoryappstage2";
 

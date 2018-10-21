@@ -2,7 +2,6 @@ package com.example.android.inventoryappstage2;
 
 import android.app.LoaderManager;
 import android.content.ContentUris;
-import android.content.ContentValues;
 import android.content.CursorLoader;
 import android.content.Intent;
 import android.content.Loader;
@@ -11,7 +10,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,10 +17,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.example.android.inventoryappstage2.data.BookContract;
 import com.example.android.inventoryappstage2.data.BookContract.BookEntry;
-import com.example.android.inventoryappstage2.data.BookDbHelper;
-
 
 /**
  * Displays list of books that were entered and stored in the app.
@@ -30,7 +25,6 @@ import com.example.android.inventoryappstage2.data.BookDbHelper;
 public class MainActivity extends AppCompatActivity implements
         LoaderManager.LoaderCallbacks<Cursor> {
 
-    //private BookDbHelper mDbHelper;
     BookCursorAdapter mCursorAdapter;
     private static final int BOOK_LOADER = 0;
 
@@ -49,15 +43,15 @@ public class MainActivity extends AppCompatActivity implements
             }
         });
 
-        // Find the ListView which will be populated with the pet data
+        // Find the ListView which will be populated with the book data
         ListView bookListView = (ListView) findViewById(R.id.book_list);
 
         // Find and set empty view on the ListView, so that it only shows when the list has 0 items.
         View emptyView = findViewById(R.id.empty_view);
         bookListView.setEmptyView(emptyView);
 
-        // Setup an Adapter to create a list item for each row of pet data in the Cursor.
-        // There is no pet data yet (until the loader finishes) so pass in null for the Cursor.
+        // Setup an Adapter to create a list item for each row of book data in the Cursor.
+        // There is no book data yet (until the loader finishes) so pass in null for the Cursor.
         mCursorAdapter = new BookCursorAdapter(this, null);
         bookListView.setAdapter(mCursorAdapter);
 
@@ -96,15 +90,9 @@ public class MainActivity extends AppCompatActivity implements
     public boolean onOptionsItemSelected(MenuItem item) {
         // User clicked on a menu option in the app bar overflow menu
         switch (item.getItemId()) {
-            // Respond to a click on the "Insert dummy data" menu option
-            case R.id.action_insert_dummy_data:
-                //insertBook();
-                //displayDatabaseInfo();
-                return true;
             // Respond to a click on the "Delete all entries" menu option
             case R.id.action_delete_all_entries:
                 deleteAllBooks();
-                //displayDatabaseInfo();
                 return true;
         }
         return super.onOptionsItemSelected(item);
@@ -130,7 +118,7 @@ public class MainActivity extends AppCompatActivity implements
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-        // Update {@link PetCursorAdapter} with this new cursor containing updated pet data
+        // Update {@link BookCursorAdapter} with this new cursor containing updated book data
         mCursorAdapter.swapCursor(data);
     }
 
