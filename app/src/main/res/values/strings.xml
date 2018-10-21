@@ -103,5 +103,6 @@
     <string name="main_pg_price">Price:\u0020</string>
 
     <string name="main_pg_quantity">Quantity:\u0020</string>
+    <string name="book_supplier_contact">Book Supplier \n Contact</string>
 
 </resources>

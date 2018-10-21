@@ -3,6 +3,7 @@ package com.example.android.inventoryappstage2;
 import android.app.AlertDialog;
 import android.app.LoaderManager;
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.CursorLoader;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -54,6 +55,14 @@ import com.example.android.inventoryappstage2.data.BookContract.BookEntry;
         /** Boolean flag that keeps track of whether the book has been edited (true) or not (false) */
         private boolean mBookHasChanged = false;
 
+        private int mBookQuantityValue;
+
+        private int mBookIdValue;
+
+        private ImageButton mbookIncreaseButton;
+
+        private ImageButton mbookDecreaseButton;
+
         /**
          * OnTouchListener that listens for any user touches on a View, implying that they are modifying
          * the view, and we change the mBookHasChanged boolean to true.
@@ -100,6 +109,8 @@ import com.example.android.inventoryappstage2.data.BookContract.BookEntry;
             mbookQuantityEditText = (EditText) findViewById(R.id.edit_book_quantity);
             mbookSupplierNameEditText = (EditText) findViewById(R.id.edit_book_supplier_name);
             mbookSupplierContactEditText = (EditText) findViewById(R.id.edit_book_supplier_contact);
+            mbookIncreaseButton = (ImageButton) findViewById(R.id.edit_quantity_increase);
+            mbookDecreaseButton = (ImageButton) findViewById(R.id.edit_quantity_decrease);
 
             // Setup OnTouchListeners on all the input fields, so we can determine if the user
             // has touched or modified them. This will let us know if there are unsaved changes
@@ -109,6 +120,53 @@ import com.example.android.inventoryappstage2.data.BookContract.BookEntry;
             mbookQuantityEditText.setOnTouchListener(mTouchListener);
             mbookSupplierNameEditText.setOnTouchListener(mTouchListener);
             mbookSupplierContactEditText.setOnTouchListener(mTouchListener);
+
+            if (mCurrentBookUri == null) {
+mbookIncreaseButton.setVisibility(View.INVISIBLE);
+                mbookDecreaseButton.setVisibility(View.INVISIBLE);
+            }else {
+                mbookIncreaseButton.setVisibility(View.VISIBLE);
+                mbookDecreaseButton.setVisibility(View.VISIBLE);
+            ImageButton bookQuantityDecreaseButton = findViewById(R.id.edit_quantity_decrease);
+            bookQuantityDecreaseButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    mBookQuantityValue = Integer.valueOf(mbookQuantityEditText.getText().toString());
+
+                    mBookQuantityValue -= 1;
+
+                    if (mBookQuantityValue < 0) {
+                        //Toast.makeText(this, getString(R.string.quantity_no_inventory_message), Toast.LENGTH_SHORT).show();
+                    }else {
+                        mbookQuantityEditText.setText(String.valueOf(mBookQuantityValue));
+                        //decreaseButtonAmount(mBookIdValue, mBookQuantityValue);
+                        //savebook();
+                    }
+                }
+            });
+
+            ImageButton bookQuantityIncreaseButton = findViewById(R.id.edit_quantity_increase);
+            bookQuantityIncreaseButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    mBookQuantityValue = Integer.valueOf(mbookQuantityEditText.getText().toString());
+
+                    mBookQuantityValue += 1;
+                    if (mBookQuantityValue < 0) {
+                        //Toast.makeText(this, getString(R.string.quantity_no_inventory_message), Toast.LENGTH_SHORT).show();
+
+                    }else {
+                        mbookQuantityEditText.setText(String.valueOf(mBookQuantityValue));
+                        //decreaseButtonAmount(mBookIdValue, mBookQuantityValue);
+                        //savebook();
+                    }
+                    //mbookQuantityEditText.setText(String.valueOf(mBookQuantityValue));
+                    //increaseButtonAmount(mBookIdValue, mBookQuantityValue);
+                }
+            });
+        }
         }
 
         /**
@@ -195,18 +253,22 @@ import com.example.android.inventoryappstage2.data.BookContract.BookEntry;
                 // This is a NEW book, so insert a new book into the provider,
                 // returning the content URI for the new book.
                 Uri newUri = getContentResolver().insert(BookEntry.CONTENT_URI, values);
+                System.out.println("insert new");
 
                 // Show a toast message depending on whether or not the insertion was successful.
                 if (newUri == null) {
+                    System.out.println("insert failed");
                     // If the new content URI is null, then there was an error with insertion.
                     Toast.makeText(this, getString(R.string.editor_insert_book_failed),
                             Toast.LENGTH_SHORT).show();
                 } else {
+                    System.out.println("insert successful");
                     // Otherwise, the insertion was successful and we can display a toast.
                     Toast.makeText(this, getString(R.string.editor_insert_book_successful),
                             Toast.LENGTH_SHORT).show();
                 }
             } else {
+                System.out.println("update book");
                 // Otherwise this is an EXISTING book, so update the book with content URI: mCurrentBookUri
                 // and pass in the new ContentValues. Pass in null for the selection and selection args
                 // because mCurrentBookUri will already identify the correct row in the database that
@@ -215,10 +277,12 @@ import com.example.android.inventoryappstage2.data.BookContract.BookEntry;
 
                 // Show a toast message depending on whether or not the update was successful.
                 if (rowsAffected == 0) {
+                    System.out.println("update failed");
                     // If no rows were affected, then there was an error with the update.
                     Toast.makeText(this, getString(R.string.editor_update_book_failed),
                             Toast.LENGTH_SHORT).show();
                 } else {
+                    System.out.println("update successful");
                     // Otherwise, the update was successful and we can display a toast.
                     Toast.makeText(this, getString(R.string.editor_update_book_successful),
                             Toast.LENGTH_SHORT).show();
@@ -366,6 +430,8 @@ import com.example.android.inventoryappstage2.data.BookContract.BookEntry;
                 final int bookQuantity = cursor.getInt(bookQuantityColumnIndex);
                 String bookSupplierName = cursor.getString(bookSupplierNameColumnIndex);
                 final int bookSupplierContact = cursor.getInt(bookSupplierContactColumnIndex);
+                mBookQuantityValue = bookQuantity;
+                mBookIdValue = cursor.getInt(idColumnIndex);
 
                 // Update the views on the screen with the values from the database
                 mbookNameEditText.setText(bookName);
@@ -385,21 +451,6 @@ import com.example.android.inventoryappstage2.data.BookContract.BookEntry;
                     }
                 });
 
-                ImageButton bookQuantityDecreaseButton = findViewById(R.id.edit_quantity_decrease);
-                bookQuantityDecreaseButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        decreaseButtonAmount(idColumnIndex, bookQuantity);
-                    }
-                });
-
-                ImageButton bookQuantityIncreaseButton = findViewById(R.id.edit_quantity_increase);
-                bookQuantityIncreaseButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        increaseButtonAmount(idColumnIndex, bookQuantity);
-                    }
-                });
             }
         }
 
@@ -414,8 +465,10 @@ import com.example.android.inventoryappstage2.data.BookContract.BookEntry;
         }
 
     public void decreaseButtonAmount(int bookID, int bookQuantity) {
-        bookQuantity -= 1;
+        //bookQuantity -= 1;
         if (bookQuantity >= 0) {
+
+            //savebook();
             updateBookAmount(bookQuantity);
             //Toast.makeText(this, getString(R.string.quantity_change_msg), Toast.LENGTH_SHORT).show();
         } else {
@@ -424,8 +477,12 @@ import com.example.android.inventoryappstage2.data.BookContract.BookEntry;
     }
 
     public void increaseButtonAmount(int bookID, int bookQuantity) {
-        bookQuantity = bookQuantity + 1;
+            System.out.println("increase" + bookID + " " + bookQuantity);
+        //bookQuantity = bookQuantity + 1;
         if (bookQuantity >= 0) {
+
+            System.out.println("start increase");
+            //savebook();
             updateBookAmount(bookQuantity);
             //Toast.makeText(this, getString(R.string.quantity_change_msg), Toast.LENGTH_SHORT).show();
         }
